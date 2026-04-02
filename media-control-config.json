@@ -1,0 +1,18 @@
+{
+	"pauseThreshold": 10,
+	"resumeOnSliderUp": true,
+	"skipCenter": 50,
+	"skipThreshold": 20,
+	"action": {
+		"media-pause": {
+			"selectedByChannel": {
+				"2": true
+			}
+		},
+		"media-skip": {
+			"selectedByChannel": {
+				"4": true
+			}
+		}
+	}
+}

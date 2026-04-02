@@ -2,9 +2,9 @@
   "id": "media-control",
   "name": "Media Control",
   "version": "0.1.0",
-  "description": "A minimal Dot X plugin",
+  "description": "Control media playback from Dot X sliders — pause below threshold, skip/previous from center",
   "author": "",
   "dotxVersion": ">=1.0.0",
-  "permissions": [],
+  "permissions": ["run"],
   "main": "main.ts"
 }
