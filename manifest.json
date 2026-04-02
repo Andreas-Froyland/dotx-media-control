@@ -1,0 +1,10 @@
+{
+  "id": "media-control",
+  "name": "Media Control",
+  "version": "0.1.0",
+  "description": "A minimal Dot X plugin",
+  "author": "",
+  "dotxVersion": ">=1.0.0",
+  "permissions": [],
+  "main": "main.ts"
+}

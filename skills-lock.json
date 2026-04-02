@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "dot-x-plugin-dev": {
+      "source": "DotMatrixLabs/create-dotx-plugin",
+      "sourceType": "github",
+      "computedHash": "61e77f5dfd123133b01e083dd42ca3a2a9553a1fa0f6427c43bf9ab9abc8388f"
+    }
+  }
+}
