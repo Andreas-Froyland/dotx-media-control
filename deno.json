@@ -1,6 +1,10 @@
 {
   "tasks": {
-    "start": "deno run --allow-all main.ts"
+    "start": "deno run --allow-all main.ts",
+    "build-native": "cd native && cargo build --release"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window"]
   },
   "nodeModulesDir": "auto"
 }

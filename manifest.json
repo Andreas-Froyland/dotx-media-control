@@ -5,6 +5,14 @@
   "description": "Control media playback from Dot X sliders — pause below threshold, skip/previous from center",
   "author": "",
   "dotxVersion": ">=1.0.0",
-  "permissions": ["run"],
-  "main": "main.ts"
+  "permissions": ["run", "ffi"],
+  "main": "main.ts",
+  "packaging": {
+    "include": [
+      "main.ts",
+      "manifest.json",
+      "deno.json",
+      "native/target/release/media_control.dll"
+    ]
+  }
 }

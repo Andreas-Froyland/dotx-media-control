@@ -1,5 +1,35 @@
 import Plugin, { runPlugin } from "npm:@dotmatrixlabs/dotx-plugin-sdk";
-import { pause, play, next, previous } from "npm:win-media-control";
+
+// ---------------------------------------------------------------------------
+// Deno FFI — Rust DLL for low-latency Windows media control
+// Build with: cd native && cargo build --release
+// ---------------------------------------------------------------------------
+const dllPath = new URL(
+  "./native/target/release/media_control.dll",
+  import.meta.url,
+);
+
+const lib = Deno.dlopen(dllPath, {
+  media_play: { parameters: [], result: "i32" },
+  media_pause: { parameters: [], result: "i32" },
+  media_next: { parameters: [], result: "i32" },
+  media_previous: { parameters: [], result: "i32" },
+});
+
+function mediaPlay(): void {
+  lib.symbols.media_play();
+}
+function mediaPause(): void {
+  lib.symbols.media_pause();
+}
+function mediaNext(): void {
+  lib.symbols.media_next();
+}
+function mediaPrevious(): void {
+  lib.symbols.media_previous();
+}
+
+// ---------------------------------------------------------------------------
 
 class MediaControlPlugin extends Plugin {
   private pauseChannels = new Set<number>();
@@ -20,6 +50,7 @@ class MediaControlPlugin extends Plugin {
     this.pausedChannels.clear();
     this.skipChannels.clear();
     this.skipWaitingForCenter.clear();
+    lib.close();
   }
 
   private setupConfig(): void {
@@ -47,7 +78,9 @@ class MediaControlPlugin extends Plugin {
 
       s.addSwitch("resumeOnSliderUp")
         .setLabel("Resume on slider up")
-        .setDesc("Resume playback when the pause slider moves back above the threshold")
+        .setDesc(
+          "Resume playback when the pause slider moves back above the threshold",
+        )
         .setValue(this.config.get<boolean>("resumeOnSliderUp", true))
         .onChange(({ value }) => this.config.set("resumeOnSliderUp", value));
 
@@ -60,7 +93,7 @@ class MediaControlPlugin extends Plugin {
       s.addInput("skipThreshold")
         .setLabel("Skip Distance (0–100)")
         .setDesc(
-          "How far from center the slider must move to trigger skip or previous"
+          "How far from center the slider must move to trigger skip or previous",
         )
         .setValue(String(this.config.get<number>("skipThreshold", 20)))
         .onChange(({ value }) =>
@@ -121,13 +154,13 @@ class MediaControlPlugin extends Plugin {
       if (!this.pausedChannels.has(channel)) {
         this.pausedChannels.add(channel);
         console.log("Pausing Channel", channel);
-        pause("all").catch(() => {});
+        mediaPause();
       }
     } else {
       if (this.pausedChannels.has(channel)) {
         this.pausedChannels.delete(channel);
         if (this.config.get<boolean>("resumeOnSliderUp", true)) {
-          play("all").catch(() => {});
+          mediaPlay();
           console.log("Resuming Channel", channel);
         }
       }
@@ -147,10 +180,10 @@ class MediaControlPlugin extends Plugin {
     }
 
     if (value > center + threshold) {
-      next("all").catch(() => {});
+      mediaNext();
       this.skipWaitingForCenter.set(channel, true);
     } else if (value < center - threshold) {
-      previous("all").catch(() => {});
+      mediaPrevious();
       this.skipWaitingForCenter.set(channel, true);
     }
   }

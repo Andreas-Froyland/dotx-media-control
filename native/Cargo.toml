@@ -1,0 +1,14 @@
+[package]
+name = "media-control"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "media_control"
+crate-type = ["cdylib"]
+
+[dependencies]
+windows = { version = "0.52", features = [
+    "Media_Control",
+    "Foundation",
+] }
