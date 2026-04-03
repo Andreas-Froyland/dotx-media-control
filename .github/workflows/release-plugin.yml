@@ -1,0 +1,82 @@
+name: Release Plugin
+run-name: >-
+  Release ${{ github.event_name == 'workflow_dispatch'
+    && format('v{0}', inputs.version)
+    || github.ref_name }}
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Plugin version to release, without the leading v
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Resolve release version
+        id: release
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+            TAG="v${VERSION}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+            VERSION="${TAG#v}"
+          fi
+
+          if [ -z "${VERSION}" ]; then
+            echo "Release version is required"
+            exit 1
+          fi
+
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Verify release version
+        run: npm run release:verify-version
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+
+      - name: Build release package
+        run: npm run package
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-package
+          path: dist/plugin.zip
+          if-no-files-found: error
+
+      - name: Publish GitHub Release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag }}
+          name: ${{ steps.release.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          files: dist/plugin.zip
+          fail_on_unmatched_files: true
+          generate_release_notes: true
