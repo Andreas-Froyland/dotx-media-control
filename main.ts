@@ -103,7 +103,7 @@ class MediaControlPlugin extends Plugin {
   }
 
   private setupPauseButton(): void {
-    this.actionmapper
+    const button = this.actionmapper
       .addSystemUtilButton("media-pause")
       .setTitle("Media: Pause")
       .setIcon("fas fa-pause fa-lg")
@@ -116,10 +116,15 @@ class MediaControlPlugin extends Plugin {
         }
       })
       .setAutoPersist(true);
+
+    // Restore in-memory state — onClick is never replayed on startup
+    for (const [ch, selected] of Object.entries(button.getSelectedMap())) {
+      if (selected) this.pauseChannels.add(Number(ch));
+    }
   }
 
   private setupSkipButton(): void {
-    this.actionmapper
+    const button = this.actionmapper
       .addSystemUtilButton("media-skip")
       .setTitle("Media: Skip")
       .setIcon("fas fa-forward fa-lg")
@@ -133,6 +138,14 @@ class MediaControlPlugin extends Plugin {
         }
       })
       .setAutoPersist(true);
+
+    // Restore in-memory state — onClick is never replayed on startup
+    for (const [ch, selected] of Object.entries(button.getSelectedMap())) {
+      if (selected) {
+        this.skipChannels.add(Number(ch));
+        this.skipWaitingForCenter.set(Number(ch), false);
+      }
+    }
   }
 
   private setupDeviceUpdates(): void {
