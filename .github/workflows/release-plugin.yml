@@ -47,22 +47,37 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
 
+      - name: Detect runtime
+        id: runtime
+        shell: bash
+        run: |
+          if [ -f "deno.json" ]; then
+            echo "type=deno" >> "$GITHUB_OUTPUT"
+          else
+            echo "type=node" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
+      - name: Install Node dependencies
+        if: steps.runtime.outputs.type == 'node'
         run: npm install
 
       - name: Verify release version
-        run: npm run release:verify-version
+        run: npx @dotmatrixlabs/dotx-plugin-sdk verify-release
         env:
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
 
-      - name: Build release package
-        run: npm run package
+      - name: Build plugin (Node only)
+        if: steps.runtime.outputs.type == 'node'
+        run: npm run build
+
+      - name: Package plugin
+        run: npx @dotmatrixlabs/dotx-plugin-sdk package
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
