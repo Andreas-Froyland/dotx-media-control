@@ -72,9 +72,19 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
 
-      - name: Build plugin (Node only)
+      - name: Build plugin (Node)
         if: steps.runtime.outputs.type == 'node'
         run: npm run build
+
+      - name: Setup Deno
+        if: steps.runtime.outputs.type == 'deno'
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Build plugin (Deno)
+        if: steps.runtime.outputs.type == 'deno'
+        run: deno task build
 
       - name: Package plugin
         run: npx @dotmatrixlabs/dotx-plugin-sdk package

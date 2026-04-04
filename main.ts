@@ -5,7 +5,7 @@ import Plugin, { runPlugin } from "npm:@dotmatrixlabs/dotx-plugin-sdk";
 // Build with: cd native && cargo build --release
 // ---------------------------------------------------------------------------
 const dllPath = new URL(
-  "./native/target/release/media_control.dll",
+  "../native/target/release/media_control.dll",
   import.meta.url,
 );
 

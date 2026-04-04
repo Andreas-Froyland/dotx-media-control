@@ -1,7 +1,9 @@
 {
   "tasks": {
     "start": "deno run --allow-all main.ts",
-    "build-native": "cd native && cargo build --release"
+    "build-native": "cd native && cargo build --release",
+    "package": "npx @dotmatrixlabs/dotx-plugin-sdk package",
+    "build": "deno run --allow-all --node-modules-dir=none npm:esbuild main.ts --bundle --platform=node --format=esm --external:npm:@dotmatrixlabs/dotx-plugin-sdk --outfile=dist/main.js"
   },
   "compilerOptions": {
     "lib": ["deno.window"]
