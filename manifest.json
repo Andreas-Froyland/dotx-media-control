@@ -1,7 +1,7 @@
 {
   "id": "media-control",
   "name": "Media Control",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Control media playback from Dot X sliders — pause below threshold, skip/previous from center",
   "author": "Ananords",
   "dotxVersion": ">=1.0.0",
