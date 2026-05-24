@@ -95,7 +95,7 @@ jobs:
         run: deno task build
 
       - name: Package plugin
-        run: npx @dotmatrixlabs/dotx-plugin-sdk package
+        run: npx @dotmatrixlabs/dotx-plugin-sdk@latest package
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
