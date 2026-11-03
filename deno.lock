@@ -7,6 +7,7 @@
     "jsr:@std/internal@^1.0.14": "1.0.14",
     "jsr:@std/path@^1.0.6": "1.1.5",
     "npm:@dotmatrixlabs/dotx-plugin-sdk@*": "1.0.0",
+    "npm:@dotmatrixlabs/dotx-plugin-sdk@1.1.6": "1.1.6",
     "npm:esbuild@*": "0.28.0",
     "npm:win-media-control@*": "0.1.1"
   },
@@ -40,7 +41,16 @@
       "integrity": "sha512-jrphPplBHhCNlD4viSENeAOAugh6hBgjJpizBVlF0HRYrYx7qOuXBzx1INtZ6hnZjaLv8rnt7Kyliig9gNz8Kg==",
       "dependencies": [
         "adm-zip",
-        "conf",
+        "conf@14.0.0_ajv@8.18.0",
+        "socket.io-client"
+      ],
+      "bin": true
+    },
+    "@dotmatrixlabs/dotx-plugin-sdk@1.1.6": {
+      "integrity": "sha512-AEOhDpouZRS9RAoUpSsXaeuePEG8Pxl534+RwzNjFtf+mqiHH8MGhdLEO9GcoSvt0Ye8KqiZZGqdjd7wGSMVcg==",
+      "dependencies": [
+        "adm-zip",
+        "conf@14.0.0_ajv@8.18.0",
         "socket.io-client"
       ],
       "bin": true
@@ -207,6 +217,20 @@
       ]
     },
     "conf@14.0.0": {
+      "integrity": "sha512-L6BuueHTRuJHQvQVc6YXYZRtN5vJUtOdCTLn0tRYYV5azfbAFcPghB5zEE40mVrV6w7slMTqUfkDomutIK14fw==",
+      "dependencies": [
+        "ajv",
+        "ajv-formats",
+        "atomically",
+        "debounce-fn",
+        "dot-prop",
+        "env-paths",
+        "json-schema-typed",
+        "semver",
+        "uint8array-extras"
+      ]
+    },
+    "conf@14.0.0_ajv@8.18.0": {
       "integrity": "sha512-L6BuueHTRuJHQvQVc6YXYZRtN5vJUtOdCTLn0tRYYV5azfbAFcPghB5zEE40mVrV6w7slMTqUfkDomutIK14fw==",
       "dependencies": [
         "ajv",
