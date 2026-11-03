@@ -1,4 +1,4 @@
-import Plugin, { runPlugin } from "npm:@dotmatrixlabs/dotx-plugin-sdk@1.1.6";
+import Plugin, { runPlugin } from "npm:@dotmatrixlabs/dotx-plugin-sdk@1.1.7";
 
 // ---------------------------------------------------------------------------
 // Deno FFI — Rust DLL for low-latency Windows media control

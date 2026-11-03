@@ -8,6 +8,7 @@
     "jsr:@std/path@^1.0.6": "1.1.5",
     "npm:@dotmatrixlabs/dotx-plugin-sdk@*": "1.0.0",
     "npm:@dotmatrixlabs/dotx-plugin-sdk@1.1.6": "1.1.6",
+    "npm:@dotmatrixlabs/dotx-plugin-sdk@1.1.7": "1.1.7",
     "npm:esbuild@*": "0.28.0",
     "npm:win-media-control@*": "0.1.1"
   },
@@ -48,6 +49,15 @@
     },
     "@dotmatrixlabs/dotx-plugin-sdk@1.1.6": {
       "integrity": "sha512-AEOhDpouZRS9RAoUpSsXaeuePEG8Pxl534+RwzNjFtf+mqiHH8MGhdLEO9GcoSvt0Ye8KqiZZGqdjd7wGSMVcg==",
+      "dependencies": [
+        "adm-zip",
+        "conf@14.0.0_ajv@8.18.0",
+        "socket.io-client"
+      ],
+      "bin": true
+    },
+    "@dotmatrixlabs/dotx-plugin-sdk@1.1.7": {
+      "integrity": "sha512-BN555UZ9I4uZLtWIfl2ORyn/63F/tmw8uM5T4mIzdwclDsqG0MRfvO3vyLv9tqaZGoBNdxBe86Cpsv8vk7/7Zg==",
       "dependencies": [
         "adm-zip",
         "conf@14.0.0_ajv@8.18.0",
