@@ -68,6 +68,12 @@ class MediaControlPlugin extends Plugin {
     await this.settingsPage.addSettings((s) => {
       s.addSection("general").setName("General");
 
+      s.addInfo("channelSetup")
+        .setText(
+          "Turn on Media: Pause or Media: Skip for a channel in that channel's System Utils.",
+        )
+        .setStyle("info");
+
       s.addInput("pauseThreshold")
         .setLabel("Pause Threshold (0–100)")
         .setDesc("Slider position below which all media is paused")
