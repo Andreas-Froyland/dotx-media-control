@@ -70,7 +70,7 @@ class MediaControlPlugin extends Plugin {
 
       s.addInfo("channelSetup")
         .setText(
-          "Turn on Media: Pause or Media: Skip for a channel in that channel's System Utils.",
+          "Turn on Pause or Skip for a channel in that channel's System Utilities.",
         )
         .setStyle("info");
 
